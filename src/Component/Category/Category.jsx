@@ -9,9 +9,14 @@ import slide4 from "../../assets/home/slide4.jpg";
 import slide5 from "../../assets/home/slide5.jpg";
 import slide6 from "../../assets/home/slide1.jpg";
 import Wrapper from "../Wrapper/Wrapper";
+import SectionTitle from "../SectionTitle/SectionTitle";
 const Category = () => {
   return (
     <Wrapper>
+      <SectionTitle
+      SubHeading={'---From 11:00am to 10:00pm---'}
+      heading={'ORDER ONLINE'}
+      ></SectionTitle>
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
