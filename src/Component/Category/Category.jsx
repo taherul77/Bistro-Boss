@@ -62,7 +62,7 @@ const Category = () => {
           },
         }}
         modules={[Pagination, Autoplay]}
-        className="mySwiper mb-24"
+        className="mySwiper mb-12"
       >
         {categories.map((category, index) => (
           <SwiperSlide key={index} className="relative">
