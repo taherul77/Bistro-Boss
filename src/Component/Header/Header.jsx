@@ -1,7 +1,31 @@
 
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Header = () => {
+
+  const { user, logOut } = useContext(AuthContext);
+  
+
+  const signOut = () => {
+    logOut()
+      .then(() => {
+        refreshPage();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
+
+
   const navItem = (
     <>
       <li>
@@ -145,30 +169,65 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-black rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
+        {user?.uid ? (
+              <>
+                
+                <div className="dropdown dropdown-hover dropdown-end">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-ghost btn-circle border-2 border-primary avatar ml-2"
+                  >
+                    <div className="w-10 rounded-full">
+                      {user?.photoURL ? (
+                        <img alt="" src={user.photoURL} />
+                      ) : (
+                        <img
+                          alt=""
+                          src="https://i.ibb.co/VvZScTP/blank-avatar.png"
+                        />
+                      )}
+                    </div>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-compact dropdown-content p-2 shadow bg-base-100 border rounded-md w-52"
+                  >
+                    <li>
+                      <Link>{user?.displayName}</Link>
+                    </li>
+                    <li>
+                      <Link>Profile</Link>
+                    </li>
+                    <li>
+                      <Link onClick={signOut}>Logout</Link>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+              <ul className="col-span-3 justify-end items-center hidden space-x-8 lg:flex">
+              <li>
+                  <Link
+                      to="/login"
+                      className="px-6 py-2 font-bold text-cyan-50 border-md rounded-md   bg-fuchsia-900  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                      aria-label="login"
+                      title="login"
+                  >
+                      login
+                  </Link>
+              </li>
           </ul>
-        </div>
+              
+              
+              
+              </>
+            )}
+
+
+
+
+        
       </div>
     </div>
   );
