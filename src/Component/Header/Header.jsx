@@ -210,7 +210,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/login"
-                  className="px-6 py-2 font-bold text-cyan-50 border-md rounded-md   bg-fuchsia-900  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                  className="px-6 py-2 font-bold text-cyan-50 border-md rounded-md bg-[#D99904]"
                   aria-label="login"
                   title="login"
                 >

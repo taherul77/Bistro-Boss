@@ -2,6 +2,7 @@ import SectionTitle from "../SectionTitle/SectionTitle";
 import featuredImg from "../../assets/home/featured.jpg";
 import Wrapper from "../Wrapper/Wrapper";
 import './Featured.css'
+import Button from "../Button/Button";
 
 const Featured = () => {
   return (
@@ -13,22 +14,28 @@ const Featured = () => {
         SubHeading={"---Check it out---"}
         heading={"FEATURED ITEM"}
       ></SectionTitle>
-      <div  className="flex col-span-12 md:col-span-6 justify-center bg-slate-300 bg-opacity-40  items-center py-16 px-36 gap-4">
-        <div>
-          <img className="rounded-xl" src={featuredImg} alt="" />
-        </div>
-        <div>
-          <p>March 20, 2023</p>
-          <p>WHERE CAN I GET SOME?</p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
-            obcaecati placeat molestias aperiam, repellat nesciunt vitae nihil
-            odio accusantium, ex, facilis voluptate nulla consequatur totam
-            consequuntur deleniti harum iure ipsa?
-          </p>
-          <button className="btn btn-outline border border-b-4 text-black">Order Now</button>
-        </div>
-      </div>
+      <Wrapper>
+                    <div className="flex-col md:flex-row flex justify-center items-center gap-10 py-14 lg:py-28">
+                        <img className="md:w-6/12 h-auto rounded-sm" src={featuredImg} alt="" />
+                        <div className="text-white md:w-6/12 space-y-2 text-center md:text-left">
+                            <h5>March 20, 2023</h5>
+                            <h4 className="font-bold text-lg">
+                                WHERE CAN I GET SOME?
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Error voluptate facere,
+                                deserunt dolores maiores quod nobis quas quasi.
+                                Eaque repellat recusandae ad laudantium tempore
+                                consequatur consequuntur omnis ullam maxime
+                                tenetur.
+                            </p>
+                            <Button className="border-2 border-l-0 border-r-0 border-transparent border-b-white text-white font-medium py-2 px-6 rounded-md transition-all hover:bg-white hover:text-primary hover:border-b-primary">
+                              Read More
+                            </Button>
+                        </div>
+                    </div>
+                </Wrapper>
       </div>
     </Wrapper>
   );
