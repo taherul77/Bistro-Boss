@@ -121,6 +121,14 @@ const Header = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-black rounded-box w-52"
           >
             {navItem}
+            <li> <Link
+                  to="/login"
+                  className="px-6 py-2 font-bold text-cyan-50 border-md rounded-md   bg-fuchsia-900  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                  aria-label="login"
+                  title="login"
+                >
+                  login
+                </Link></li>
           </ul>
         </div>
         <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>

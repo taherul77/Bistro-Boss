@@ -7,6 +7,8 @@ import BannerMenu from "../../Component/BannerMenu/BannerMenu";
 import menuImage from "../../assets/home/chef-service.jpg";
 import DessertItem from "../../Component/DessertItem/DessertItem";
 import PizzaItem from "../../Component/PizzaItem/PizzaItem";
+import SaladItem from "../../Component/SaladItem/SaladItem";
+import SoupItem from "../../Component/SoupItem/SoupItem";
 
 const OurMenu = () => {
   useTitle("Our Menu");
@@ -46,6 +48,34 @@ const OurMenu = () => {
         <div>
           <Wrapper>
             <PizzaItem></PizzaItem>
+          </Wrapper>
+        </div>
+      </div>
+      <div>
+        <BannerMenu
+          img={menuImage}
+          heading={"SALADS"}
+          description={
+            "Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+          }
+        ></BannerMenu>
+        <div>
+          <Wrapper>
+            <SaladItem></SaladItem>
+          </Wrapper>
+        </div>
+      </div>
+      <div>
+        <BannerMenu
+          img={menuImage}
+          heading={"SOUPS"}
+          description={
+            "Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+          }
+        ></BannerMenu>
+        <div>
+          <Wrapper>
+            <SoupItem></SoupItem>
           </Wrapper>
         </div>
       </div>

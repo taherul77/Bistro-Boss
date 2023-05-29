@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import MenuItem from "../PopularMenu/MenuItem/MenuItem";
 
 
-const SaladItem = () => {
+const SoupItem = () => {
+
     const [menu, setMenu] = useState([]);
 
     useEffect(() => {
       fetch("menu.json")
         .then((res) => res.json())
         .then((data) => {
-          const popularItem = data.filter((item) => item.category === "salad");
+          const popularItem = data.filter((item) => item.category === "soup");
           setMenu(popularItem);
         });
     }, []);
@@ -25,4 +26,4 @@ const SaladItem = () => {
     );
 };
 
-export default SaladItem;
+export default SoupItem;
