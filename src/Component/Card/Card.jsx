@@ -16,7 +16,7 @@ const Card = ({item}) => {
           <p>{recipe}</p>
           
           <div className="card-actions justify-center">
-            <button className="btn btn-primary">Buy Now</button>
+            <button className="btn btn-outline bg-stone-200 border border-b-4 border-[#D99904] mt-4 ">Buy Now</button>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { FaComment } from 'react-icons/fa';
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,7 +15,7 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("reviews.json")
+    fetch("http://localhost:5000/review")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
@@ -34,8 +35,10 @@ const Reviews = () => {
                 readOnly
               />
 
-              <div className="text-black py-6">
-                <p>{review.details}</p>
+              <div className="text-black py-4 flex flex-col items-center">
+                <p className="text-4xl"> <FaComment></FaComment></p>
+             
+                <p className="py-2">{review.details}</p>
                 <h3 className="text-2xl text-[#D99904]">{review.name}</h3>
               </div>
             </div>
