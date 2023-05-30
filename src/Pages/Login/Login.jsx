@@ -93,7 +93,7 @@ const Login = () => {
                       name="email"
                       id="email"
                       placeholder="example@email.com"
-                      className="w-full px-4 py-3 rounded-md border border-gray-700 bg-secondary text-neutral"
+                      className="w-full px-4 py-3 rounded-md border border-gray-700  text-neutral"
                       required
                     />
                   </div>
@@ -106,7 +106,7 @@ const Login = () => {
                       name="password"
                       id="password"
                       placeholder="Password"
-                      className="w-full px-4 py-3 rounded-md border border-gray-700 bg-secondary text-neutral"
+                      className="w-full px-4 py-3 rounded-md border border-gray-700  text-neutral"
                       required
                     />
                     <div className="flex justify-end text-xs">
@@ -124,7 +124,7 @@ const Login = () => {
                       name="captcha"
                       id="captcha"
                       placeholder="captcha"
-                      className="w-full px-4 py-3 rounded-md border border-gray-700 bg-secondary text-neutral"
+                      className="w-full px-4 py-3 rounded-md border border-gray-700  text-neutral"
                       required
                     />
                     
