@@ -125,7 +125,7 @@ const Login = () => {
                       id="captcha"
                       placeholder="captcha"
                       className="w-full px-4 py-3 rounded-md border border-gray-700  text-neutral"
-                      required
+                     
                     />
                     
                   </div>
