@@ -8,11 +8,9 @@ const Card = ({item}) => {
     const { name ,image , price , recipe , _id} = item;
 
 const {user} = useContext(AuthContext);
-const [ , refetch ] = useCart();
+const [ ,refetch] = useCart();
 
-console.log('====================================');
-console.log(user);
-console.log('====================================');
+
 
 const navigate = useNavigate();
 
@@ -30,16 +28,14 @@ const navigate = useNavigate();
         })
         .then(res => res.json())
         .then(data => {
-          console.log('====================================');
-          console.log(data);
-          console.log('====================================');
+          console.log(data.insertedId);
           if(data.insertedId){
            
             refetch();
             Swal.fire({
               position: 'items-center',
               icon: 'success',
-              title: 'Toi add kore dicos reeeeeee',
+              title: ' add ok ',
               showConfirmButton: false,
               timer: 1500
             })
@@ -64,21 +60,6 @@ const navigate = useNavigate();
       }
       console.log(item);
     }
-
-
-
-
-
-    // const showAlert = () => {
-    //   Swal.fire({
-    //     title: 'Hello!',
-    //     text: 'This is a SweetAlert2 dialog.',
-    //     icon: 'success',
-    //     confirmButtonText: 'OK'
-    //   });
-    // };
-
-
 
   return (
     <div>

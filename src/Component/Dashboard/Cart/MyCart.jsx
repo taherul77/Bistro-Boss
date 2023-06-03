@@ -1,0 +1,149 @@
+import Swal from "sweetalert2";
+import useCart from "../../../hooks/useCart";
+import { AiOutlineDelete } from "react-icons/ai";
+
+const MyCart = () => {
+  const [cart ,refetch] = useCart();
+  const total = cart.reduce((sum, item) => item.price + sum, 0);
+  const handleDelete = (id) =>{
+    
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`http://localhost:5000/cart/${id}`,{
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.deletedCount>0){
+                    refetch();
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
+                }
+            })
+
+
+
+        
+        }
+      })
+  }
+  return (
+    <div>
+      <section className="container mt-10 px-4 mx-auto">
+        <div className="flex  flex-evenly  items-center gap-10">
+          <h2 className="lg:text-3xl text-center font-medium ">
+            TOTAL ORDERS: {cart?.length}
+          </h2>
+          <h2 className="lg:text-3xl text-center font-medium ">TOTAL PRICE: ${total}</h2>
+          
+            <button className="btn bg-[#D1A054]">PAY NOW</button>
+          
+        </div>
+
+        <div className="flex flex-col mt-6">
+          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-auto">
+            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div className="overflow-hidden border  md:rounded-lg">
+                <table className="min-w-full divide-y ">
+                  <thead className=" bg-[#D1A054]">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="py-3.5 px-4  text-sm font-normal text-center  "
+                      >
+                        <div className="flex items-center gap-x-3"></div>
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 px-4 text-sm font-normal text-center hidden lg:block "
+                      >
+                        <div className="flex w-full justify-center items-center gap-x-3">
+                          <span>ITEM IMAGE</span>
+                        </div>
+                      </th>
+
+                      <th
+                        scope="col"
+                        className=" py-3.5 text-sm font-normal text-center   "
+                      >
+                        <button className="flex w-full items-center pl-5 md:pl-0 lg:justify-center gap-x-2">
+                          <p>ITEM NAME</p>
+                        </button>
+                      </th>
+
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-center  "
+                      >
+                        <button className="flex items-center gap-x-2">
+                          <span>PRICE</span>
+                        </button>
+                      </th>
+
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-center  "
+                      >
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="lg:text-center">
+                    {
+                        cart.map((item ,index) => <tr key={item._id}>
+                            <td  className="px-4 py-4 text-sm text-center whitespace-nowrap">
+                              <span>{index + 1 }</span>
+                            </td>
+                            <td className="px-4 py-4 hidden lg:block text-sm font-medium  whitespace-nowrap">
+                              <div className="inline-flex items-center gap-x-3">
+                                <div className="flex items-center gap-x-2">
+                                  <img
+                                    className="object-cover w-10 h-10 rounded-md"
+                                    src={item.image}
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </td>
+      
+                            <td className="px-4 py-4 text-sm pl-5 md:pl-0 lg:text-center whitespace-nowrap">
+                              {item.name}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-start whitespace-nowrap">
+                              ${(item.price).toFixed(2)}
+                            </td>
+      
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              
+                                <button onClick={()=>handleDelete(item?._id)} className="btn-sm text-xl text-white bg-red-600 transition-colors duration-200 hover:text-black focus:outline-none">
+                                  <AiOutlineDelete></AiOutlineDelete>
+                                </button>
+      
+                               
+                             
+                            </td>
+                          </tr>)
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default MyCart;

@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useCart from "../../hooks/useCart";
+import { FaShoppingCart } from 'react-icons/fa';
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
-  const cart = useCart();
+  const [cart] = useCart();
+  console.log(cart.length);
 
   const signOut = () => {
     logOut()
@@ -49,21 +51,6 @@ const Header = () => {
           }
         >
           OUR MENU
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink
-          to="/dashboard"
-          aria-label="Our DashboardPage"
-          title="Our DashboardPage"
-          className={({ isActive }) =>
-            isActive
-              ? " border-md rounded-md bg-red-950 text-white"
-              : "font-medium  text-white "
-          }
-        >
-          DASHBOARD
         </NavLink>
       </li>
 
@@ -123,7 +110,8 @@ const Header = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-black rounded-box w-52"
           >
             {navItem}
-            <li> <Link
+            <li> 
+              <Link
                   to="/login"
                   className="px-6 py-2 font-bold text-cyan-50 border-md rounded-md   bg-fuchsia-900  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                   aria-label="login"
@@ -139,28 +127,19 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{navItem}</ul>
       </div>
       <div className="navbar-end">
+        <Link to="/dashboard/my-cart">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              <span className="badge badge-sm indicator-item">{cart?.length}</span>
+            <div className="indicator text-2xl">
+             <FaShoppingCart></FaShoppingCart>
+              
+              <span className="badge badge-sm indicator-item">+{cart?.length || 0}</span>
             </div>
           </label>
         
         </div>
+        
+        </Link>
         {user?.uid ? (
           <>
             <div className="dropdown dropdown-hover dropdown-end">
@@ -181,10 +160,13 @@ const Header = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-compact dropdown-content p-2 shadow bg-base-100 border rounded-md w-52"
+                className="menu menu-compact dropdown-content p-2 shadow  border rounded-md w-52"
               >
                 <li>
                   <Link>{user?.displayName}</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
                 </li>
                 <li>
                   <Link>Profile</Link>
