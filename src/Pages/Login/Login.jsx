@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 
 import { GoogleAuthProvider,GithubAuthProvider } from "firebase/auth";
@@ -15,6 +15,7 @@ const Login = () => {
     const { signIn,logInWithGoogle,logInWithGithub } = useContext(AuthContext);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
@@ -46,8 +47,27 @@ const Login = () => {
           .then((result) => {
             const user = result.user;
             console.log(user);
-            setError("");
-            navigate(from, { replace: true });
+            const saveUser = { displayName: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL, }
+            fetch('http://localhost:5000/users', {
+              method: 'POST',
+              headers: {
+                  'content-type': 'application/json'
+              },
+              body: JSON.stringify(saveUser)
+          })
+              .then(res => res.json())
+              .then(data => {
+                  if (data.insertedId) {
+                    setError("");
+                   
+                    
+                      
+                  }
+              })
+              navigate(from, { replace: true });
+            
           })
           .catch((error) => {
             console.error(error);

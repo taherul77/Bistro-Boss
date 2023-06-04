@@ -5,11 +5,13 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 import img from "../../assets/others/authentication2.png";
 import "../Login/login.css";
+import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
   const [error, setError] = useState("");
-
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const { profileUpdate } = useContext(AuthContext);
 
   const [accepted, setAccepted] = useState(false);
@@ -19,40 +21,52 @@ const Register = () => {
     setAccepted(event.target.checked);
   };
 
-  const handleSignUp = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const photo = form.photo.value;
-    const email = form.email.value;
-    const password = form.password.value;
+  const onSubmit = data => {
 
-    console.log(name, photo, password, email);
+    createUser(data.email, data.password)
+        .then(result => {
 
-    setError("");
-    createUser(email, password)
-      .then((result) => {
-        const createdUser = result.user;
-        console.log(createdUser);
-        form.reset();
-        handleUserProfile(name, photo);
-        navigate("/login");
-        setError("");
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error.message);
-      });
-  };
-  const handleUserProfile = (name, photo) => {
-    const profile = {
-      displayName: name,
-      photoURL: photo,
-    };
-    profileUpdate(profile)
-      .then(() => {})
-      .catch((error) => console.error(error));
-  };
+            const loggedUser = result.user;
+            console.log(loggedUser);
+             const profile = {
+              displayName: data.name,
+              email: data.email,
+              photoURL: data.photo,
+            };
+
+            profileUpdate(profile)
+                .then(() => {
+                    const saveUser = { displayName: data.name,
+                      email: data.email,
+                      photoURL: data.photo, }
+                    fetch('http://localhost:5000/users', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(saveUser)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.insertedId) {
+                                reset();
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'User created successfully.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate('/');
+                            }
+                        })
+
+
+
+                })
+                .catch(error => console.log(error))
+        })
+};
 
   return (
     <div>
@@ -65,9 +79,9 @@ const Register = () => {
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div>
               <div className="p-8 space-y-3 rounded-xl  text-neutral">
-                <h1 className="text-2xl font-bold text-center">Login</h1>
+                <h1 className="text-2xl font-bold text-center">Register</h1>
                 <form
-                  onSubmit={handleSignUp}
+                  onSubmit={handleSubmit(onSubmit)}
                   noValidate=""
                   action=""
                   className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -81,26 +95,15 @@ const Register = () => {
                       >
                         Name
                       </label>
-                      <input
-                        type="name"
-                        name="name"
-                        id="name"
-                        placeholder="Name"
-                        className="w-full px-3 py-2 border rounded-md border-gray-700  text-neutral"
-                      />
+                      <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input w-full px-3 py-2 border rounded-md input-bordered" />
+                                {errors.name && <span className="text-red-600">Name is required</span>}
                     </div>
                     <div>
                       <label htmlFor="email" className="block mb-2 text-sm">
                         Email address
                       </label>
-                      <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="example@email.com  "
-                        className="w-full px-3 py-2 border rounded-md border-gray-700 text-neutral"
-                        required
-                      />
+                      <input type="email"  {...register("email", { required: true })} name="email" placeholder="email" className="input w-full px-3 py-2 border rounded-md input-bordered" />
+                                {errors.email && <span className="text-red-600">Email is required</span>}
                     </div>
                     <div>
                       <div className="flex justify-between mb-2">
@@ -108,27 +111,24 @@ const Register = () => {
                           Password
                         </label>
                       </div>
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="*****"
-                        className="w-full px-3 py-2 border rounded-md border-gray-700 text-neutral"
-                        required
-                      />
+                      <input type="password"  {...register("password", {
+                                    required: true,
+                                    minLength: 6,
+                                    maxLength: 20,
+                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                                })} placeholder="password" className="input w-full px-3 py-2 border rounded-md input-bordered" />
+                                {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                                {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                                {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
+                                {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
                     </div>
 
                     <div>
                       <label htmlFor="photo" className="block mb-2 text-sm">
                         Photo Link
                       </label>
-                      <input
-                        type="photo"
-                        name="photo"
-                        id="photo"
-                        placeholder="Photo Link"
-                        className="w-full px-3 py-2 border rounded-md border-gray-700 text-neutral"
-                      />
+                      <input type="text"  {...register("photo", { required: true })} placeholder="Photo URL" className="input w-full px-3 py-2 border rounded-md input-bordered" />
+                                {errors.photo && <span className="text-red-600">Photo URL is required</span>}
                     </div>
                   </div>
 
