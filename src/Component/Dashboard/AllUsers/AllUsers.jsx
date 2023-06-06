@@ -34,7 +34,7 @@ const AllUsers = () => {
  
 
   return (
-    <div className="">
+    <div className="w-full max-auto">
       <section className="container mt-10 px-4 mx-auto">
         <div className="flex  flex-evenly  items-center gap-10">
           <h2 className="lg:text-3xl text-center font-medium ">

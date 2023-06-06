@@ -1,50 +1,40 @@
-import { AiOutlineDelete,AiOutlineCreditCard } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineCreditCard } from "react-icons/ai";
 import Swal from "sweetalert2";
 import useMenu from "../../../hooks/useMenu";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-
-
 const ManageItems = () => {
-    const [menu, , refetch] = useMenu();
-    const [axiosSecure] = useAxiosSecure();
+  const [menu, , refetch] = useMenu();
+  const [axiosSecure] = useAxiosSecure();
 
-    const handleDelete = item => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                axiosSecure.delete(`/menu/${item._id}`)
-                    .then(res => {
-                        console.log('deleted res', res.data);
-                        if (res.data.deletedCount > 0) {
-                            refetch();
-                            Swal.fire(
-                                'Deleted!',
-                                'Your file has been deleted.',
-                                'success'
-                            )
-                        }
-                    })
-
-            }
-        })
-    }
-    return (
-        <div>
-            <section className="container mt-10 px-4 mx-auto">
+  const handleDelete = (item) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/menu/${item._id}`).then((res) => {
+          console.log("deleted res", res.data);
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          }
+        });
+      }
+    });
+  };
+  return (
+    <div className="w-full max-auto">
+      <section className="container mt-10 px-4 mx-auto">
         <div className="flex  flex-evenly  items-center gap-10">
           <h2 className="lg:text-3xl text-center font-medium ">
             TOTAL ITEMS: {menu?.length}
           </h2>
-          
         </div>
 
         <div className="flex flex-col mt-6">
@@ -96,45 +86,46 @@ const ManageItems = () => {
                     </tr>
                   </thead>
                   <tbody className="lg:text-center">
-                    
-                         {
-                            menu.map((item,index)=><tr key={item.id} >
-                            <td  className="px-4 py-4 text-sm text-center whitespace-nowrap">
-                              <span>{ index + 1 }</span>
-                            </td>
-                            <td className="px-4 py-4 hidden lg:block text-sm font-medium  whitespace-nowrap">
-                              <div className="inline-flex items-center gap-x-3">
-                                <div className="flex items-center gap-x-2">
-                                  <img
-                                    className="object-cover w-10 h-10 rounded-md"
-                                    src={item.image}
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </td>
-      
-                            <td className="px-4 py-4 text-sm pl-5 md:pl-0 lg:text-center whitespace-nowrap">
-                            {item.name}
-                            </td>
-                            <td className="px-4 py-4 text-sm text-start whitespace-nowrap">
-                            {item.price}
-                            </td>
-      
-                            <td className="flex gap-5 px-4 py-4 text-sm whitespace-nowrap">
-                              
-                                <button onClick={()=>handleDelete(item)}  className="btn-sm text-xl text-white bg-[#D1A054] transition-colors duration-200 hover:text-black focus:outline-none">
-                                  <AiOutlineCreditCard></AiOutlineCreditCard>
-                                </button>
-                                <button onClick={()=>handleDelete(item)}  className="btn-sm text-xl text-white bg-red-600 transition-colors duration-200 hover:text-black focus:outline-none">
-                                  <AiOutlineDelete></AiOutlineDelete>
-                                </button>
-      
-                               
-                             
-                            </td>
-                          </tr>)
-                         }
+                    {menu.map((item, index) => (
+                      <tr key={item.id}>
+                        <td className="px-4 py-4 text-sm text-center whitespace-nowrap">
+                          <span>{index + 1}</span>
+                        </td>
+                        <td className="px-4 py-4 hidden lg:block text-sm font-medium  whitespace-nowrap">
+                          <div className="inline-flex items-center gap-x-3">
+                            <div className="flex items-center gap-x-2">
+                              <img
+                                className="object-cover w-10 h-10 rounded-md"
+                                src={item.image}
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-4 py-4 text-sm pl-5 md:pl-0 lg:text-center whitespace-nowrap">
+                          {item.name}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-start whitespace-nowrap">
+                          {item.price}
+                        </td>
+
+                        <td className="flex gap-5 px-4 py-4 text-sm whitespace-nowrap">
+                          <button
+                            onClick={() => handleDelete(item)}
+                            className="btn-sm text-xl text-white bg-[#D1A054] transition-colors duration-200 hover:text-black focus:outline-none"
+                          >
+                            <AiOutlineCreditCard></AiOutlineCreditCard>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item)}
+                            className="btn-sm text-xl text-white bg-red-600 transition-colors duration-200 hover:text-black focus:outline-none"
+                          >
+                            <AiOutlineDelete></AiOutlineDelete>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -142,9 +133,8 @@ const ManageItems = () => {
           </div>
         </div>
       </section>
-         
-        </div>
-    );
+    </div>
+  );
 };
 
 export default ManageItems;

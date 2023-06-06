@@ -126,7 +126,7 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItem}</ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-4">
         <Link to="/dashboard/my-cart">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">

@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import useCart from "../../../hooks/useCart";
 import { AiOutlineDelete } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [cart ,refetch] = useCart();
@@ -46,8 +47,10 @@ const MyCart = () => {
             TOTAL ORDERS: {cart?.length}
           </h2>
           <h2 className="lg:text-3xl text-center font-medium ">TOTAL PRICE: ${total}</h2>
-          
-            <button className="btn bg-[#D1A054]">PAY NOW</button>
+          <Link to='/dashboard/payment'>
+          <button  className="btn bg-[#D1A054]">PAY NOW</button>
+          </Link>
+            
           
         </div>
 
